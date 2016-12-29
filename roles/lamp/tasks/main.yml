@@ -123,10 +123,21 @@
     state: present
     name: mariadb-server
 
+- name: Enable the MariaDB service
+  service:
+    name: mariadb
+    enabled: yes
+    state: started
+
 - name: Configure MariaDB max_allowed_packet
   template:
     src: my.cnf.j2
     dest: /etc/my.cnd
+
+- name: Reload the MariaDB service
+  service:
+    name: mariadb
+    state: reloaded
 
 - name: Install Git
   yum:

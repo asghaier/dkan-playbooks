@@ -1,0 +1,30 @@
+<VirtualHost _default_:80>
+  CustomLog /var/log/httpd/default.access.log common
+  ErrorLog /var/log/httpd/default.error.log
+  DocumentRoot {{ www_path }}/html
+  <Directory {{ www_path }}/html>
+    Options FollowSymLinks
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+  </Directory>
+</VirtualHost>
+<VirtualHost _default_:443>
+  SSLEngine on
+  SSLProtocol all -SSLv2
+  SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5
+  SSLCertificateFile /etc/pki/tls/certs/localhost.crt
+  SSLCertificateKeyFile /etc/pki/tls/private/localhost.key
+  BrowserMatch "MSIE [2-5]" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
+  CustomLog logs/ssl_request_log "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+  CustomLog /var/log/httpd/default.access.log common
+  ErrorLog /var/log/httpd/default.error.log
+  DocumentRoot {{ www_path }}/html
+  <Directory {{ www_path }}/html>
+    Options FollowSymLinks
+    AllowOverride All
+    SSLOptions +StdEnvVars
+    Order allow,deny
+    Allow from all
+  </Directory>
+</VirtualHost>

@@ -77,7 +77,9 @@
     - mod_ssl.x86_64
 
 - name: Configure PHP memory limit
-  template: src=php.ini.j2 dest=/etc/php.ini
+  template:
+    src: php.ini.j2
+    dest: /etc/php.ini
 
 - name: Enable the Apache service
   service:
@@ -86,11 +88,18 @@
     state: started
 
 - name: Apache umask configuration
-  template: src=httpd.ini.j2 dest=/etc/sysconfig/httpd
+  template:
+    src: httpd.j2
+    dest: /etc/sysconfig/httpd
+
+- name: Configure default vhost
+  template:
+    src: default.conf.j2
+    dest: /etc/httpd/conf.d/default.conf
 
 - name: Initialize the default index.html
   file:
-    path: /var/www/html/index.html
+    path: "{{ www_path }}/html/index.html"
     state: touch
 
 - name: Install MariaDB

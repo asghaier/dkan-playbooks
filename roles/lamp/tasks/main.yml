@@ -123,6 +123,11 @@
     state: present
     name: mariadb-server
 
+- name: Configure MariaDB max_allowed_packet
+  template:
+    src: my.cnf.j2
+    dest: /etc/my.cnd
+
 - name: Install Git
   yum:
     state: present

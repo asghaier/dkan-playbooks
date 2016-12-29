@@ -39,3 +39,40 @@
     name: '*'
     state: latest
 
+- name: Install PHP56 and Apache
+  yum:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - php.x86_64
+    - php-bcmath.x86_64
+    - php-dba.x86_64
+    - php-gd.x86_64
+    - php-gmp.x86_64
+    - php-imap.x86_64
+    - php-ldap.x86_64
+    - php-mbstring.x86_64
+    - php-mcrypt.x86_64
+    - php-mssql.x86_64
+    - php-mysqlnd.x86_64
+    - php-mysql.x86_64
+    - php-pdo.x86_64
+    - php-pecl-gnupg.x86_64
+    - php-pecl-http.x86_64
+    - php-pecl-igbinary.x86_64
+    - php-pecl-imagick.x86_64
+    - php-pecl-memcache.x86_64
+    - php-pecl-mongo.x86_64
+    - php-pecl-oauth.x86_64
+    - php-pecl-propro.x86_64
+    - php-pecl-raphf.x86_64
+    - php-pecl-ssh2.x86_64
+    - php-pecl-uploadprogress.x86_64
+    - php-pecl-xhprof.x86_64
+    - php-pgsql.x86_64
+    - php-pspell.x86_64
+    - php-soap.x86_64
+    - php-tidy.x86_64
+    - php-xmlrpc.x86_64
+    - mod_ssl.x86_64
+

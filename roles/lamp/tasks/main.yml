@@ -85,6 +85,9 @@
     enabled: yes
     state: started
 
+- name: Apache umask configuration
+  template: src=httpd.ini.j2 dest=/etc/sysconfig/httpd
+
 - name: Install MariaDB
   yum:
     state: present

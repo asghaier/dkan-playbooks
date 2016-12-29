@@ -19,3 +19,12 @@
   become: false
   when: st.changed
 
+- name: Install EPEL and REMI repository
+  yum:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - yum-utils
+    - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    - http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+

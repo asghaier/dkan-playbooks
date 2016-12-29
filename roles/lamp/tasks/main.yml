@@ -28,3 +28,9 @@
     - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     - http://rpms.remirepo.net/enterprise/remi-release-7.rpm
 
+- name: Enable Optional RPMs repository
+  shell: subscription-manager repos --enable=rhel-7-server-optional-rpms
+
+- name: Enable Remi PHP 5.6 repository
+  shell: yum-config-manager --enable remi-php56
+

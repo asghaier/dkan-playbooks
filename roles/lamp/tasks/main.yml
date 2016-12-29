@@ -107,6 +107,17 @@
     name: httpd
     state: reloaded
 
+- name: Open HTTP and HTTPS ports
+  firewalld:
+    service: "{{ item }}"
+    zone: public
+    immediate: yes
+    permanent: true
+    state: enabled
+  with_items:
+    - http
+    - https
+
 - name: Install MariaDB
   yum:
     state: present
@@ -124,3 +135,4 @@
       php -r "readfile('https://s3.amazonaws.com/files.drush.org/drush.phar');" > /usr/local/bin/drush
       chmod +x /usr/local/bin/drush
     fi
+

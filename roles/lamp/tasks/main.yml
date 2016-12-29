@@ -88,6 +88,11 @@
 - name: Apache umask configuration
   template: src=httpd.ini.j2 dest=/etc/sysconfig/httpd
 
+- name: Initialize the default index.html
+  file:
+    path: /var/www/html/index.html
+    state: touch
+
 - name: Install MariaDB
   yum:
     state: present

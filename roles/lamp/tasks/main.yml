@@ -86,3 +86,10 @@
     state: present
     name: git
 
+- name: Install latest Drush.phar
+  shell: |
+    drush_latest="$(curl -s https://github.com/drush-ops/drush/releases/latest| grep -c "$(drush --version|grep -i version|cut -f2 -d':'|tr -d ' ')")"
+    if [ ! -e /usr/local/bin/drush ] || [ $drush_latest -ne 1 ]; then
+      php -r "readfile('https://s3.amazonaws.com/files.drush.org/drush.phar');" > /usr/local/bin/drush
+      chmod +x /usr/local/bin/drush
+    fi

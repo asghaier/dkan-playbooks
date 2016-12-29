@@ -102,6 +102,11 @@
     path: "{{ www_path }}/html/index.html"
     state: touch
 
+- name: Reload the Apache service
+  service:
+    name: httpd
+    state: reloaded
+
 - name: Install MariaDB
   yum:
     state: present

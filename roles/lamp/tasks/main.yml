@@ -76,6 +76,9 @@
     - php-xmlrpc.x86_64
     - mod_ssl.x86_64
 
+- name: Configure PHP memory limit
+  template: src=php.ini.j2 dest=/etc/php.ini
+
 - name: Install MariaDB
   yum:
     state: present

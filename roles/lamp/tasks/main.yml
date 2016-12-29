@@ -1,3 +1,9 @@
 ---
 # LAMP stack setup and configuration tasks.
 
+- name: diable SELinux
+  selinux:
+    policy: targeted
+    state: disabled
+  register: st
+

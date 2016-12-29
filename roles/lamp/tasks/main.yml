@@ -81,3 +81,8 @@
     state: present
     name: mariadb-server
 
+- name: Install Git
+  yum:
+    state: present
+    name: git
+

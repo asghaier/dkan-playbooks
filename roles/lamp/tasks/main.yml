@@ -76,3 +76,8 @@
     - php-xmlrpc.x86_64
     - mod_ssl.x86_64
 
+- name: Install MariaDB
+  yum:
+    state: present
+    name: mariadb-server
+

@@ -137,7 +137,7 @@
 - name: Reload the MariaDB service
   service:
     name: mariadb
-    state: reloaded
+    state: restarted
 
 - name: Install Git
   yum:

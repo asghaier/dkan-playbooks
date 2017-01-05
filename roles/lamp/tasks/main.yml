@@ -167,10 +167,36 @@
   changed_when: false
   when: mysql_install_packages | bool
 
-- name: Reload the MariaDB service
+- name: Get list of hosts for the root user.
+  command: mysql -NBe "SELECT Host FROM mysql.user WHERE User = 'root' ORDER BY (Host='localhost') ASC"
+  register: mysql_root_hosts
+  changed_when: false
+  always_run: true
+  when: mysql_install_packages | bool
+
+# Note: We do not use mysql_user for this operation, as it doesn't always update
+# the root password correctly. See: https://goo.gl/MSOejW
+# Set root password for MySQL >= 5.7.x.
+- name: Update MySQL root password for localhost root account (5.7.x).
+  shell: >
+    mysql -u root -NBe
+    'ALTER USER "root"@"{{ item }}" IDENTIFIED WITH mysql_native_password BY "root";'
+  with_items: "{{ mysql_root_hosts.stdout_lines|default([]) }}"
+  when: ((mysql_install_packages | bool) and ('5.7.' in mysql_cli_version.stdout))
+
+# Set root password for MySQL < 5.7.x.
+- name: Update MySQL root password for localhost root account (< 5.7.x).
+  shell: >
+    mysql -NBe
+    'SET PASSWORD FOR "root"@"{{ item }}" = PASSWORD("root");'
+  with_items: "{{ mysql_root_hosts.stdout_lines|default([]) }}"
+  when: ((mysql_install_packages | bool) and ('5.7.' not in mysql_cli_version.stdout))
+
+- name: Restart the MariaDB service
   service:
     name: mariadb
     state: restarted
+  when: mysql_install_packages | bool
 
 - name: Install Git
   yum:

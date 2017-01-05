@@ -217,6 +217,10 @@
   with_items: "{{ mysql_anonymous_hosts.stdout_lines|default([]) }}"
   when: mysql_install_packages | bool
 
+- name: Remove MySQL test database.
+  mysql_db: "name='test' state=absent"
+  when: mysql_install_packages | bool
+
 - name: Restart the MariaDB service
   service:
     name: mariadb

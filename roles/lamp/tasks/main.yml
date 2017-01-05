@@ -122,6 +122,17 @@
   yum:
     state: present
     name: mariadb-server
+  register: rh_mysql_install_packages
+
+- name: Check if MySQL packages were installed.
+  set_fact:
+    mysql_install_packages: "{{ (rh_mysql_install_packages is defined and rh_mysql_install_packages.changed) or (deb_mysql_install_packages is defined and deb_mysql_install_packages.changed) }}"
+
+- name: Install MySQL-python module
+  yum:
+    state: present
+    name: MySQL-python
+  when: mysql_install_packages | bool
 
 - name: Enable the MariaDB service
   service:
